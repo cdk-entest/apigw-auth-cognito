@@ -1,8 +1,8 @@
 {
-  "name": "api-gateway-lambda-auth-cognito",
+  "name": "apigw-auth-app",
   "version": "0.1.0",
   "bin": {
-    "api-gateway-lambda-auth-cognito": "bin/api-gateway-lambda-auth-cognito.js"
+    "apigw-auth-app": "bin/apigw-auth-app.ts"
   },
   "scripts": {
     "build": "tsc",

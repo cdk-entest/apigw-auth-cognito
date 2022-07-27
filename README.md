@@ -1,14 +1,23 @@
-# Welcome to your CDK TypeScript project
+synth
 
-This is a blank project for CDK development with TypeScript.
+```bash
+cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-auth-app.ts' synth
+```
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+deploy
 
-## Useful commands
+```bash
+cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-auth-app.ts' deploy
+```
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+test api
+
+```bash
+export REGION=ap-southeast-1
+export APIID=ubky9s17pk
+export TOKEN=
+```
+
+```bask
+curl -X GET https://$APIID.execute-api.$REGION.amazonaws.com/prod/book -H "Authorization: Bearer $TOKEN"
+```
