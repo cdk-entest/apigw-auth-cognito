@@ -22,7 +22,8 @@ Different from the sample projects this.
 
 ## Architecture
 
-![aws_devops-apigw-auth drawio(3)](https://user-images.githubusercontent.com/20411077/181419284-88cdc3e3-134e-42b8-a8ff-f7b67a6d17c7.png)
+![aws_devops-apigw-auth drawio(5)](https://user-images.githubusercontent.com/20411077/181422942-f1ab2bc6-ea90-4696-b6c4-f1e521d026b0.png)
+
 
 [Details Here](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
 
