@@ -1,4 +1,4 @@
-# API Gateway Authentication with Cognito JWT and Lamba Authorizer
+# API Gateway Auth with Cognito JWT and Lamba Authorizer
 
 1. There are several IP providers, here using cognito
 2. API gateway provider different auth methods
@@ -10,7 +10,6 @@
 ## Architecture
 
 ![custom-auth-workflow](https://user-images.githubusercontent.com/20411077/181411172-022c8cd9-ea30-433e-a5fc-ec8c9622bf90.png)
-
 
 [Details Here](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
 
