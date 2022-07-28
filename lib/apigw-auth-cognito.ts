@@ -2,8 +2,15 @@ import { aws_apigateway, aws_lambda, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as path from "path";
 
+// better be system parameter or secret manager here
+// or import from the cognito stack
+interface ApiGwAuthStackProps extends StackProps {
+  userPoolId: string;
+  appClientId: string;
+}
+
 export class ApiGwAuthStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props: ApiGwAuthStackProps) {
     super(scope, id, props);
 
     // api gateway
@@ -26,10 +33,10 @@ export class ApiGwAuthStack extends Stack {
       code: aws_lambda.Code.fromAsset(path.join(__dirname, "./../lambda")),
       handler: "lambda_auth.handler",
       environment: {
-        JWKS_ENDPOINT: "",
         ACCOUNT_ID: this.account,
         API_ID: api.restApiId,
-        SM_JWKS_SECRET_NAME: "",
+        USER_POOL_ID: props.userPoolId,
+        APP_CLIENT_POOL_ID: props.appClientId,
       },
     });
 

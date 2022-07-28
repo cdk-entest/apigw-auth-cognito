@@ -92,6 +92,7 @@ def test_auth_api():
         "https://ubky9s17pk.execute-api.ap-southeast-1.amazonaws.com/prod/book",
         headers={"Authorization": f'Bearer {token}'}
     )
+    print(response)
     print(response.json())
 
 
