@@ -9,6 +9,9 @@
 
 ## Architecture
 
+![custom-auth-workflow](https://user-images.githubusercontent.com/20411077/181411172-022c8cd9-ea30-433e-a5fc-ec8c9622bf90.png)
+
+
 [Details Here](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
 
 1. User request/get a jwt token from cognito
