@@ -186,15 +186,31 @@ async function verifyAccessToken(accessToken) {
 generate iam policy function
 
 ```js
-function generatePolicy(principalId, policyStatements) {
-  // Generate a fully formed IAM policy
-  const authResponse = {};
-  authResponse.principalId = principalId;
-  const policyDocument = {};
-  policyDocument.Version = "2012-10-17";
-  policyDocument.Statement = policyStatements;
-  authResponse.policyDocument = policyDocument;
-  return authResponse;
+function generateIAMPolicy(scopeClaims) {
+  // Declare empty policy statements array
+  const policyStatements = [];
+  // Iterate over API Permissions
+  for (let i = 0; i < apiPermissions.length; i++) {
+    // Check if token scopes exist in API Permission
+    if (scopeClaims.indexOf(apiPermissions[i].scope) > -1) {
+      // User token has appropriate scope, add API permission to policy statements
+      policyStatements.push(
+        generatePolicyStatement(
+          apiPermissions[i].arn,
+          apiPermissions[i].stage,
+          apiPermissions[i].httpVerb,
+          apiPermissions[i].resource,
+          "Allow"
+        )
+      );
+    }
+  }
+  // Check if no policy statements are generated, if so, create default deny all policy statement
+  if (policyStatements.length === 0) {
+    return defaultDenyAllPolicy;
+  } else {
+    return generatePolicy("user", policyStatements);
+  }
 }
 ```
 
