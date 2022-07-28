@@ -1,5 +1,8 @@
 import { CognitoJwtVerifier } from "aws-jwt-verify";
-import token from "./token.json" assert { type: "json" };
+import config from "./config.json" assert { type: "json" };
+
+console.log(`export USER_POOL_ID=${config.USER_POOL_ID}`);
+console.log(`export APP_CLIENT_ID=${config.APP_CLIENT_ID}`);
 
 async function verifyAccessToken(accessToken) {
   // verifier that expects valid access tokens:
@@ -20,7 +23,7 @@ async function verifyAccessToken(accessToken) {
   return decodedToken;
 }
 
-const decoded = await verifyAccessToken(token.token)
+const decoded = await verifyAccessToken(config.token)
   .then((data) => {
     console.log("decoded verified jwt token: ", JSON.stringify(data));
   })
