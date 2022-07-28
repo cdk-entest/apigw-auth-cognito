@@ -1,11 +1,23 @@
-# API Gateway Auth with Cognito JWT and Lamba Authorizer
+# API Gateway Auth with Cognito JWT and Lamba Auth
 
-1. There are several IP providers, here using cognito
+1. There are several IP providers
+   - [Auth0](https://auth0.com/docs/customize/integrations/aws/aws-api-gateway-custom-authorizers)
+   - [Cognito](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cognito-readme.html)
+   - [OICD Provider](https://github.com/aws-samples/openbanking-brazilian-auth-samples)
 2. API gateway provider different auth methods
    - IAM
    - Token based (JWT, OAuth2)
    - Request based
    - Cognito
+3. AWS sample projects
+
+   - [api-gateway-auth](https://github.com/aws-samples/api-gateway-auth) **yaml**
+   - [openbanking-brazilian-auth-samples](https://github.com/aws-samples/openbanking-brazilian-auth-samples) **OICD Provider**
+
+Different from the sample projects this
+
+- Using CDK
+- Using Cognito
 
 ## Architecture
 
