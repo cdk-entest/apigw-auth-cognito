@@ -21,17 +21,57 @@
 
 ## Cognito User Pool Stack
 
-```bash
-manually by aws console
+```tsx
+export class CongitoUserPool extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
+    super(scope, id, props);
+
+    // cognito user pool
+    const userPool = new aws_cognito.UserPool(this, "UserPoolApiAuthDemo", {
+      userPoolName: "UserPoolForApiAuthDemo",
+      selfSignUpEnabled: true,
+      signInAliases: {
+        email: true,
+      },
+      autoVerify: {
+        email: true,
+      },
+    });
+
+    // add a client
+    const client = userPool.addClient("apigw-auth-demo", {
+      authFlows: {
+        userPassword: true,
+        adminUserPassword: true,
+        userSrp: true,
+        custom: true,
+      },
+      userPoolClientName: "ApiAuthClient",
+    });
+
+    // app client id
+    const clientId = client.userPoolClientId;
+  }
+}
 ```
 
-take note userPoolId and appClientId which needes for the ApiGw Auth Stack and local testing.
+pass userPoolId and appClientId from cognito stack to apigw stack in /bin/apigw-auth-app.ts
 
-```js
+```tsx
+#!/usr/bin/env node
+import * as cdk from "aws-cdk-lib";
+import { ApiGwAuthStack, CongitoUserPool } from "../lib/apigw-auth-cognito";
+
+// app
+const app = new cdk.App();
+
+// cognito user pool stack
+const cognito = new CongitoUserPool(app, "CognitoUserPool", {});
+
 // apigw auth stack
 new ApiGwAuthStack(app, "ApiGwAuthStack", {
-  userPoolId: "",
-  appClientId: "",
+  userPoolId: cognito.userPoolId,
+  appClientId: cognito.appClientId,
 });
 ```
 
