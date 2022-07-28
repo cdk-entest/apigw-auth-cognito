@@ -20,7 +20,9 @@ Different from the sample projects this
 - Using Cognito
 
 ## Architecture
-![aws_devops-apigw-auth drawio(1)](https://user-images.githubusercontent.com/20411077/181418846-38ae6089-9ad0-415a-994a-2ff85fd82485.png)
+
+![aws_devops-apigw-auth drawio(3)](https://user-images.githubusercontent.com/20411077/181419284-88cdc3e3-134e-42b8-a8ff-f7b67a6d17c7.png)
+
 
 
 [Details Here](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
