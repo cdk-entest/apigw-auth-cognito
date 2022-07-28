@@ -23,15 +23,14 @@ Different from the sample projects this
 
 ![aws_devops-apigw-auth drawio(3)](https://user-images.githubusercontent.com/20411077/181419284-88cdc3e3-134e-42b8-a8ff-f7b67a6d17c7.png)
 
-
-
 [Details Here](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
 
 1. User request/get a jwt token from cognito
-2. User send a request with the jwt in the header to apigw
-3. Apigw call a lambda auth to [validate the jwt token](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-verifying-a-jwt.html)
-4. The lamba auth validate and return a temporary iam policy
-5. Given the iam policy user request can access thingsz
+2. Cognito response a jwt token to the user
+3. User send a request with the jwt in the header to apigw
+4. Apigw call a lambda auth to [validate the jwt token](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-verifying-a-jwt.html)
+5. The lamba auth validate and return a temporary iam policy
+6. Given the iam policy user request can access things
 
 ## Cognito User Pool Stack
 
@@ -257,20 +256,6 @@ export const handler = async (event, context) => {
 };
 ```
 
-## CDK Build and Deploy
-
-synth
-
-```bash
-cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-auth-app.ts' synth
-```
-
-deploy
-
-```bash
-cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-auth-app.ts' deploy
-```
-
 ## Testing with Boto3
 
 create a config.json to locally store things for testing. when deploy, can store these in system parameters or secrete maanger, lambda environments, cdk stack references.
@@ -308,4 +293,48 @@ curl option
 
 ```bash
 curl -X GET https://$APIID.execute-api.$REGION.amazonaws.com/prod/book -H "Authorization: Bearer $TOKEN"
+```
+
+## How to build and deploy with CDK?
+
+clone this project
+
+```bash
+git clone https://github.com/entest-hai/apigw-auth-cognito
+```
+
+go to root project directory
+
+```bash
+cd apigw-auth-cognito
+```
+
+install dependencies for cdk
+
+```bash
+npm install package.json
+```
+
+install dependencies for lambda auth (aws-jwt-verify). then cdk will deploy depdencies for this lambda by zipping and uploading.
+
+```bash
+cdk lambda
+```
+
+and
+
+```
+npm install package.json
+```
+
+cdk synth
+
+```bash
+cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-auth-app.ts' synth
+```
+
+deploy
+
+```bash
+cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-auth-app.ts' deploy --all
 ```
