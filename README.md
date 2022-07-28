@@ -14,10 +14,11 @@
    - [api-gateway-auth](https://github.com/aws-samples/api-gateway-auth) **yaml**
    - [openbanking-brazilian-auth-samples](https://github.com/aws-samples/openbanking-brazilian-auth-samples) **OICD Provider**
 
-Different from the sample projects this
+Different from the sample projects this.
 
 - Using CDK
 - Using Cognito
+- [GitHub](https://github.com/entest-hai/apigw-auth-cognito)
 
 ## Architecture
 
