@@ -1,4 +1,10 @@
-import { aws_apigateway, aws_lambda, Stack, StackProps } from "aws-cdk-lib";
+import {
+  aws_apigateway,
+  aws_cognito,
+  aws_lambda,
+  Stack,
+  StackProps,
+} from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as path from "path";
 
@@ -68,15 +74,40 @@ export class ApiGwAuthStack extends Stack {
 }
 
 export class CongitoUserPool extends Stack {
+  public readonly userPoolId: string;
+  public readonly appClientId: string;
+
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
     // cognito user pool
+    const userPool = new aws_cognito.UserPool(this, "UserPoolApiAuthDemo", {
+      userPoolName: "UserPoolForApiAuthDemo",
+      selfSignUpEnabled: true,
+      signInAliases: {
+        email: true,
+      },
+      autoVerify: {
+        email: true,
+      },
+    });
 
-    // sign up
+    // add a client
+    const client = userPool.addClient("apigw-auth-demo", {
+      authFlows: {
+        userPassword: true,
+        adminUserPassword: true,
+        userSrp: true,
+        custom: true,
+      },
+      userPoolClientName: "ApiAuthClient",
+    });
 
-    // sign in
+    // app client id
+    const clientId = client.userPoolClientId;
 
-    // app client
+    // outputs
+    this.userPoolId = userPool.userPoolId;
+    this.appClientId = client.userPoolClientId;
   }
 }
