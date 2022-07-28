@@ -1,6 +1,6 @@
 # API Gateway Auth with Cognito JWT and Lamba Auth
 
-1. There are several IP providers
+1. There are several ID providers
    - [Auth0](https://auth0.com/docs/customize/integrations/aws/aws-api-gateway-custom-authorizers)
    - [Cognito](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cognito-readme.html)
    - [OICD Provider](https://github.com/aws-samples/openbanking-brazilian-auth-samples)
