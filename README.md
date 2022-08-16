@@ -1,29 +1,20 @@
-# API Gateway Auth with Cognito JWT and Lamba Auth
+---
+title: API Gateway Auth with Cognito JWT and Lamba
+description: API Gateway Auth with Cognito JWT and Lamba
+author: haimtran
+publishedDate: 07/27/2022
+date: 2022-07-27
+---
 
-1. There are several ID providers
-   - [Auth0](https://auth0.com/docs/customize/integrations/aws/aws-api-gateway-custom-authorizers)
-   - [Cognito](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cognito-readme.html)
-   - [OICD Provider](https://github.com/aws-samples/openbanking-brazilian-auth-samples)
-2. API gateway provider different auth methods
-   - IAM
-   - Token based (JWT, OAuth2)
-   - Request based
-   - Cognito
-3. AWS sample projects
+# Introduction
 
-   - [api-gateway-auth](https://github.com/aws-samples/api-gateway-auth) **yaml**
-   - [openbanking-brazilian-auth-samples](https://github.com/aws-samples/openbanking-brazilian-auth-samples) **OICD Provider**
+[GitHub](https://github.com/entest-hai/apigw-auth-cognito) this uses cognito and lambda to do api authentication and deply by using CDK. Basic concepts:
 
-Different from the sample projects this.
-
-- Using CDK
-- Using Cognito
-- [GitHub](https://github.com/entest-hai/apigw-auth-cognito)
-
-## Architecture
+1. ID providers: [Auth0](https://auth0.com/docs/customize/integrations/aws/aws-api-gateway-custom-authorizers), [cognito](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cognito-readme.html), [oicd provider](https://github.com/aws-samples/openbanking-brazilian-auth-samples)
+2. Api gateway auth methods: iam, token based (jwt, oauth2), request based, cognito
+3. Reference projects: [api-gateway-auth](https://github.com/aws-samples/api-gateway-auth)[openbanking-brazilian-auth-samples](https://github.com/aws-samples/openbanking-brazilian-auth-samples)
 
 ![aws_devops-apigw-auth drawio(5)](https://user-images.githubusercontent.com/20411077/181422942-f1ab2bc6-ea90-4696-b6c4-f1e521d026b0.png)
-
 
 [Details Here](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
 
@@ -297,7 +288,7 @@ curl option
 curl -X GET https://$APIID.execute-api.$REGION.amazonaws.com/prod/book -H "Authorization: Bearer $TOKEN"
 ```
 
-## How to build and deploy with CDK?
+## Deploy with CDK
 
 clone this project
 
