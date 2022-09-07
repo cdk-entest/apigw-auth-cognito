@@ -8,11 +8,11 @@ date: 2022-07-27
 
 # Introduction
 
-[GitHub](https://github.com/entest-hai/apigw-auth-cognito) this uses cognito and lambda to do api authentication and deply by using CDK. Basic concepts:
+[GitHub](https://github.com/entest-hai/apigw-auth-cognito) this uses cognito and lambda to do api authentication and deploy by using CDK. Basic concepts:
 
 1. ID providers: [Auth0](https://auth0.com/docs/customize/integrations/aws/aws-api-gateway-custom-authorizers), [cognito](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cognito-readme.html), [oicd provider](https://github.com/aws-samples/openbanking-brazilian-auth-samples)
 2. Api gateway auth methods: iam, token based (jwt, oauth2), request based, cognito
-3. Reference projects: [api-gateway-auth](https://github.com/aws-samples/api-gateway-auth)[openbanking-brazilian-auth-samples](https://github.com/aws-samples/openbanking-brazilian-auth-samples)
+3. Reference projects: [api-gateway-auth](https://github.com/aws-samples/api-gateway-auth)   [openbanking-brazilian-auth-samples](https://github.com/aws-samples/openbanking-brazilian-auth-samples)
 
 ![aws_devops-apigw-auth drawio(5)](https://user-images.githubusercontent.com/20411077/181422942-f1ab2bc6-ea90-4696-b6c4-f1e521d026b0.png)
 
