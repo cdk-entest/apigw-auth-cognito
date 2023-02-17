@@ -1,9 +1,1 @@
-{
-  "USER_POOL_ID": "",
-  "APP_CLIENT_ID": "",
-  "USER_EMAIL": "",
-  "USER_NAME": "",
-  "PASSWORD": "",
-  "API_URL": "",
-  "token": ""
-}
+{"USER_POOL_ID": "", "APP_CLIENT_ID": "", "USER_EMAIL": "", "USER_NAME": ""}

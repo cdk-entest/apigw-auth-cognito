@@ -24,7 +24,7 @@ def load_config() -> dict:
     """
     load config for testing
     """
-    with open("config.json", "r") as file:
+    with open("config_1.json", "r") as file:
         config = json.load(file)
         print(config)
     return config
@@ -47,9 +47,10 @@ def get_access_token() -> str:
     """
     get token and update the config.json
     """
-    resp = client.initiate_auth(
+    resp = client.admin_initiate_auth(
+        UserPoolId=CONFIG["USER_POOL_ID"],
         ClientId=CONFIG["APP_CLIENT_ID"],
-        AuthFlow='USER_PASSWORD_AUTH',
+        AuthFlow='ADMIN_NO_SRP_AUTH',
         AuthParameters={
             "USERNAME": CONFIG["USER_NAME"],
             "PASSWORD": CONFIG["PASSWORD"]
@@ -57,11 +58,13 @@ def get_access_token() -> str:
     )
     print(resp)
     access_token = resp['AuthenticationResult']['AccessToken']
+    id_token = resp['AuthenticationResult']['IdToken']
     # read current config
     current_config = load_config()
     # update token
-    current_config['token'] = access_token
-    with open("config.json", "w") as file:
+    current_config['ACCESS_TOKEN'] = access_token
+    current_config["ID_TOKEN"] = id_token
+    with open("config_1.json", "w") as file:
         json.dump(current_config, file)
     return access_token
 
@@ -92,7 +95,7 @@ def test_auth_api():
     # send request with token
     response = requests.get(
         url=CONFIG["API_URL"],
-        headers={"Authorization": f'Bearer {CONFIG["token"]}'}
+        headers={"Authorization": f'Bearer {CONFIG["ACCESS_TOKEN"]}'}
     )
     print(response)
     print(response.json())
