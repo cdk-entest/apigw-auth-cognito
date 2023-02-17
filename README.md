@@ -331,3 +331,9 @@ deploy
 ```bash
 cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-auth-app.ts' deploy --all
 ```
+
+## Custom Hosted UI
+
+```
+https://entest-auth.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=5tkkfuob39tkpu24vkoeuacvpq&redirect_uri=http://localhost:5500/
+```
