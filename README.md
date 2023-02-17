@@ -6,7 +6,80 @@ publishedDate: 07/27/2022
 date: 2022-07-27
 ---
 
-# Introduction
+## Introduction
+
+There are different ways to control access to API Gateway. This note shows two methods
+
+- API Gateway and Cognito Authorizer
+- Lambda Authorizer
+
+## Cognito Authorizer
+
+According to the [docs](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html), both IdToken and AccessToken can be used to control access to API Gateway. In case of access token, it should be created from hosted ui [here](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html)
+
+create a cognito user pool
+
+```ts
+export class CognitoAuthorizer extends Stack {
+  public readonly userPool: string;
+
+  constructor(scope: Construct, id: string, props: StackProps) {
+    super(scope, id, props);
+
+    const pool = new aws_cognito.UserPool(this, "UserPoolDemo", {
+      userPoolName: "UserPoolDemo",
+      selfSignUpEnabled: true,
+      signInAliases: {
+        email: true,
+      },
+      autoVerify: {
+        email: true,
+      },
+      removalPolicy: RemovalPolicy.DESTROY,
+    });
+
+    const client = pool.addClient("WebClient", {
+      authFlows: {
+        userPassword: true,
+        adminUserPassword: true,
+        custom: true,
+        userSrp: true,
+      },
+      userPoolClientName: "WebClient",
+    });
+    this.userPool = pool.userPoolArn;
+  }
+}
+```
+
+integrate the cognito user pool with a api gateway method
+
+```ts
+const apigw = new aws_apigateway.RestApi(this, "ApiGwCognitoDemo", {
+  restApiName: "pollyapi",
+  deploy: false,
+});
+
+const book = apigw.root.addResource("book");
+book.addMethod(
+  "GET",
+  new aws_apigateway.LambdaIntegration(func, {
+    proxy: true,
+  }),
+  {
+    authorizationType: aws_apigateway.AuthorizationType.COGNITO,
+    authorizer: new aws_apigateway.CognitoUserPoolsAuthorizer(
+      this,
+      "CognitoAuthorizer",
+      {
+        cognitoUserPools: [userPool],
+      }
+    ),
+  }
+);
+```
+
+# Lambda Authorizer
 
 [GitHub](https://github.com/entest-hai/apigw-auth-cognito) this uses cognito and lambda to do api authentication and deply by using CDK. Basic concepts:
 
