@@ -79,6 +79,42 @@ book.addMethod(
 );
 ```
 
+- Option 1. Use the IdToken
+
+Use this SDK function to get the IdToken
+
+```py
+resp = client.admin_initiate_auth(
+        UserPoolId=CONFIG["USER_POOL_ID"],
+        ClientId=CONFIG["APP_CLIENT_ID"],
+        AuthFlow='ADMIN_NO_SRP_AUTH',
+        AuthParameters={
+            "USERNAME": CONFIG["USER_NAME"],
+            "PASSWORD": CONFIG["PASSWORD"]
+        }
+    )
+```
+
+Put the IdToken into the Authorization header
+
+```py
+ response = requests.get(
+        url=CONFIG["API_URL"],
+        headers={"Authorization": f'Bearer {CONFIG["ACCESS_TOKEN"]}'}
+    )
+```
+
+- Option 2. Use the access token
+
+Have to setup Cognito hosted UI, cognito resource server, and API Gateway Auth Scope. Get the access token from the hosted UI, then insert the token into request Authorization header
+
+```py
+ response = requests.get(
+        url=CONFIG["API_URL"],
+        headers={"Authorization": f'Bearer {CONFIG["ACCESS_TOKEN"]}'}
+    )
+```
+
 # Lambda Authorizer
 
 [GitHub](https://github.com/entest-hai/apigw-auth-cognito) this uses cognito and lambda to do api authentication and deply by using CDK. Basic concepts:
