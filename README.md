@@ -10,10 +10,10 @@ date: 2022-07-27
 
 There are different ways to control access to API Gateway. This note shows two methods
 
-- API Gateway and Cognito Authorizer
-- Lambda Authorizer
+- Part 1. Using cognito userpool and builtin api gw token validation
+- Part 2. Using a lambda authorizer
 
-## Cognito Authorizer
+## Part 1. Cognito Authorizer
 
 According to the [docs](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html), both IdToken and AccessToken can be used to control access to API Gateway. In case of access token, it should be created from hosted ui [here](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html)
 

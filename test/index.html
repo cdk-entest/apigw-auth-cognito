@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<!-- haimtran 24 FEB 2023 -->
+<!-- simple cognito hosted ui and apigw auth -->
 <html>
   <head>
     <meta charset="utf-8" />
@@ -12,83 +10,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="" />
     <link rel="shortcut icon" href="#" />
-  </head>
-  <body>
-    <div
-      style="
-        display: flex;
-        flex-direction: column;
+    <style>
+      .main {
+        background-color: gainsboro;
+        min-height: 100vh;
         max-width: 1000px;
         margin: auto;
-        justify-items: center;
-        justify-content: center;
-        align-content: center;
-        align-items: center;
-      "
-    >
-      <button
-        id="signin"
-        style="
-          display: none;
-          box-shadow: none;
-          cursor: pointer;
-          margin-top: 20px;
-          background-color: purple;
-          color: white;
-          width: 250px;
-          padding: 10px;
-          font-size: large;
-          border-color: purple;
-          /* border: solid; */
-          border-radius: 0px;
-        "
-      >
-        Sign In
-      </button>
-      <button
-        id="cognito"
-        style="
-          box-shadow: none;
-          cursor: pointer;
-          margin-top: 20px;
-          background-color: purple;
-          color: white;
-          width: 250px;
-          padding: 10px;
-          font-size: large;
-          border-color: purple;
-          border-radius: 0px;
-        "
-      >
-        Cognito Hosted UI
-      </button>
-      <button
-        id="currentUrl"
-        style="
-          display: none;
-          box-shadow: none;
-          cursor: pointer;
-          margin-top: 20px;
-          background-color: purple;
-          color: white;
-          width: 250px;
-          padding: 10px;
-          font-size: large;
-          border-color: purple;
-          border-radius: 0px;
-        "
-      >
-        Get Current Url
-      </button>
+        text-align: center;
+      }
+      .signin-button {
+        box-shadow: none;
+        cursor: pointer;
+        margin-top: 20px;
+        background-color: purple;
+        color: white;
+        width: 250px;
+        padding: 10px;
+        font-size: large;
+        border-color: purple;
+        border-radius: 0px;
+      }
+      .container-video {
+        cursor: pointer;
+      }
+      .video {
+        width: 100%;
+        cursor: pointer;
+      }
+      .img {
+        width: 60%;
+        margin: 3em 0em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <button id="cognito" class="signin-button">Cognito Hosted UI</button>
+      <div>
+        <h2 style="text-align: left; margin-left: 1em">Summary</h2>
+        <p style="text-align: left; margin-left: 2em">
+          This show a simple ues case of Cognito. Control access to API GW using
+          a cognito user pool with hosted ui. Click the button Cognito Hosted UI
+          to go to the Cognito hosted UI.
+        </p>
+        <ul style="text-align: left">
+          <li>Access token: configure api gw with OAuth Scopes</li>
+          <li>
+            Access token: configure cognito userpool with resource server and
+            scopes
+          </li>
+          <li>ID token: straightforward to configure</li>
+          <li>Built-in agi gw validate the token</li>
+          <li>Custom the hosted ui with a dolphin image</li>
+          <li>
+            <a
+              href="https://github.com/cdk-entest/apigw-auth-cognito"
+              target="_blank"
+              >GitHub</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://cdk.entest.io/serverless/apigw-auth-cognito"
+              target="_blank"
+              >Lambda Authorizer case</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://cdk.entest.io/application/react-cognito-polly"
+              target="_blank"
+              >Cognito Identity Pool</a
+            >
+          </li>
+          <li>Command: curl -H "Authorization: Bearer $token" $url</li>
+        </ul>
+
+        <img
+          class="img"
+          src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/1.png"
+        />
+        <h2 style="text-align: left; margin-left: 1em">How things work?</h2>
+        <img
+          class="img"
+          src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/2.png"
+        />
+      </div>
+      <h2 style="text-align: left; margin-left: 1em">Video Demo</h2>
+      <div class="container-video">
+        <video controls class="video">
+          <source
+            src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/cognito_demo_video.mp4"
+          />
+        </video>
+      </div>
     </div>
-    <!-- <script src="./axios.min.js"></script> -->
     <script src="https://bundle.run/buffer@6.0.3"></script>
     <script src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/axios.min.js"></script>
-    <script src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/config.js" type="module"></script>
+    <script
+      src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/config.js"
+      type="module"
+    ></script>
     <script type="module">
       import { config } from "./config.js";
       console.log("sign in an user to cognito user pool");
-
       const getToken = () => {
         axios
           .request({
@@ -141,7 +166,9 @@
             console.log(response.data);
             localStorage.setItem("IdToken", response.data.id_token);
             localStorage.setItem("AccessToken", response.data.access_token);
-            window.location.replace("https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/profile.html");
+            window.location.replace(
+              "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/profile.html"
+            );
             return JSON.stringify(response.data);
           })
           .catch((error) => {
@@ -149,15 +176,11 @@
             return null;
           });
       };
-
-
-
-
-      document.getElementById("signin").addEventListener("click", getToken);
+      // document.getElementById("signin").addEventListener("click", getToken);
       document.getElementById("cognito").addEventListener("click", cognitoUI);
-      document
-        .getElementById("currentUrl")
-        .addEventListener("click", getCurrentUrl);
+      // document
+      //   .getElementById("currentUrl")
+      //   .addEventListener("click", getCurrentUrl);
 
       // document.onreadystatechange = () => {
       //   console.log("location change ", window.location.href);
@@ -172,8 +195,10 @@
       window.onload = () => {
         console.log("location change ", window.location.href);
         if (
-          window.location.href != "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/index.html" &&
-          window.location.href != "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/"
+          window.location.href !=
+            "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/index.html" &&
+          window.location.href !=
+            "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/"
         ) {
           const user = getCurrentUrl();
         }
