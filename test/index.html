@@ -29,6 +29,7 @@
       <button
         id="signin"
         style="
+          display: none;
           box-shadow: none;
           cursor: pointer;
           margin-top: 20px;
@@ -64,6 +65,7 @@
       <button
         id="currentUrl"
         style="
+          display: none;
           box-shadow: none;
           cursor: pointer;
           margin-top: 20px;
@@ -81,8 +83,8 @@
     </div>
     <!-- <script src="./axios.min.js"></script> -->
     <script src="https://bundle.run/buffer@6.0.3"></script>
-    <script src="./axios.min.js"></script>
-    <script src="./config.js" type="module"></script>
+    <script src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/axios.min.js"></script>
+    <script src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/config.js" type="module"></script>
     <script type="module">
       import { config } from "./config.js";
       console.log("sign in an user to cognito user pool");
@@ -137,8 +139,9 @@
           })
           .then((response) => {
             console.log(response.data);
-            localStorage.setItem("user", response.data.id_token);
-            window.location.replace("http://localhost:5500/login.html");
+            localStorage.setItem("IdToken", response.data.id_token);
+            localStorage.setItem("AccessToken", response.data.access_token);
+            window.location.replace("http://localhost:5501/profile.html");
             return JSON.stringify(response.data);
           })
           .catch((error) => {
@@ -146,6 +149,9 @@
             return null;
           });
       };
+
+
+
 
       document.getElementById("signin").addEventListener("click", getToken);
       document.getElementById("cognito").addEventListener("click", cognitoUI);

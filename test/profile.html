@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      .main {
+        max-width: 1000px;
+        margin: auto;
+        background-color: gainsboro;
+        height: 100vh;
+      }
+      .token {
+        width: 90%;
+        height: 200px;
+        margin: auto;
+        padding: 10px;
+        overflow: auto;
+        background-color: beige;
+        word-wrap: break-word;
+      }
+      .button-decode {
+        background-color: orange;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      .decoded-token {
+        background-color: beige;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div>
+        <h3>Access Token</h3>
+        <textarea id="AccessToken" class="token"></textarea>
+        <h3>Id Token</h3>
+        <textarea id="IdToken" class="token"></textarea>
+        <button class="button-decode" id="decode-access-token">
+          Decode Token
+        </button>
+        <h3>Decoded Id Token</h3>
+        <pre id="DecodedIdToken" class="decoded-token"></pre>
+      </div>
+    </div>
+    <script>
+      console.log(localStorage.getItem("AccessToken"));
+      console.log(localStorage.getItem("IdToken"));
+      let access_token = document.getElementById("AccessToken");
+      let id_token = document.getElementById("IdToken");
+      access_token.innerHTML = localStorage.getItem("AccessToken");
+      id_token.innerHTML = localStorage.getItem("IdToken");
+      // parse token
+      const decodeToken = (token) => {
+        var base64Url = token.split(".")[1];
+        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        var jsonPayload = decodeURIComponent(
+          window
+            .atob(base64)
+            .split("")
+            .map(function (c) {
+              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+        );
+
+        let obj = JSON.parse(jsonPayload)
+        let dec = document.getElementById("DecodedIdToken")
+        dec.innerHTML = JSON.stringify(obj, undefined, 2).toString()
+        console.log(JSON.stringify(obj, undefined, 2))
+        
+        return JSON.parse(jsonPayload);
+      };
+
+      decodeToken(localStorage.getItem("IdToken"))
+
+      //
+      document
+        .getElementById("decode-access-token")
+        .addEventListener(
+          "click",
+          decodeToken(localStorage.getItem("IdToken"))
+        );
+    </script>
+  </body>
+</html>

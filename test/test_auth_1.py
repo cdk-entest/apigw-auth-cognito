@@ -6,6 +6,7 @@ get and validate cognito user token, then integrate with lambda based authorizer
 3. get access token and update config.json
 4. validate access token using boto3
 5. test api auth by requests
+curl -H "Authorization: Bearer $token" $url 
 """
 
 import json
