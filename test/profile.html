@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
   <head>
     <meta charset="utf-8" />
@@ -50,15 +46,65 @@
         <pre id="DecodedIdToken" class="decoded-token"></pre>
       </div>
     </div>
-    <script>
-      console.log(localStorage.getItem("AccessToken"));
-      console.log(localStorage.getItem("IdToken"));
-      let access_token = document.getElementById("AccessToken");
-      let id_token = document.getElementById("IdToken");
-      access_token.innerHTML = localStorage.getItem("AccessToken");
-      id_token.innerHTML = localStorage.getItem("IdToken");
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/axios.min.js"></script>
+    <script
+      src="https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/config.js"
+      type="module"
+    ></script>
+    <script type="module">
+      import { config } from "./config.js";
+      console.log("sign in an user to cognito user pool");
+      const getCurrentUrl = async () => {
+        const code = window.location.href.split("=").pop();
+        console.log(code);
+        axios
+          .request({
+            method: "POST",
+            url: config.tokenEndpoint,
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            data: {
+              grant_type: "authorization_code",
+              code: code,
+              redirect_uri: config.redirectUrl,
+              client_id: config.clientId,
+            },
+          })
+          .then((response) => {
+            console.log(response.data);
+            localStorage.setItem("IdToken", response.data.id_token);
+            localStorage.setItem("AccessToken", response.data.access_token);
+
+            // //
+            // let access_token = document.getElementById("AccessToken");
+            // let id_token = document.getElementById("IdToken");
+            // access_token.innerHTML = localStorage.getItem("AccessToken");
+            // id_token.innerHTML = localStorage.getItem("IdToken");
+
+            //
+
+            window.location.replace(
+              "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/profile.html"
+            );
+
+            let access_token = document.getElementById("AccessToken");
+            let id_token = document.getElementById("IdToken");
+            access_token.innerHTML = localStorage.getItem("AccessToken");
+            id_token.innerHTML = localStorage.getItem("IdToken");
+
+            return JSON.stringify(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+            return null;
+          });
+      };
+
       // parse token
-      const decodeToken = (token) => {
+      const decodeToken = () => {
+        var token = localStorage.getItem("IdToken");
         var base64Url = token.split(".")[1];
         var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
         var jsonPayload = decodeURIComponent(
@@ -71,23 +117,39 @@
             .join("")
         );
 
-        let obj = JSON.parse(jsonPayload)
-        let dec = document.getElementById("DecodedIdToken")
-        dec.innerHTML = JSON.stringify(obj, undefined, 2).toString()
-        console.log(JSON.stringify(obj, undefined, 2))
-        
+        let obj = JSON.parse(jsonPayload);
+        let dec = document.getElementById("DecodedIdToken");
+        dec.innerHTML = JSON.stringify(obj, undefined, 2).toString();
+        console.log(JSON.stringify(obj, undefined, 2));
+
         return JSON.parse(jsonPayload);
       };
 
-      decodeToken(localStorage.getItem("IdToken"))
-
       //
+      // document
+      //   .getElementById("decode-access-token")
+      //   .addEventListener("click", getCurrentUrl);
+
       document
         .getElementById("decode-access-token")
-        .addEventListener(
-          "click",
-          decodeToken(localStorage.getItem("IdToken"))
-        );
+        .addEventListener("click", decodeToken);
+
+      window.onload = () => {
+        console.log("location change ", window.location.href);
+        if (
+          window.location.href !=
+            "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/index.html" &&
+          window.location.href !=
+            "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/profile.html"
+        ) {
+          const user = getCurrentUrl();
+        }
+
+        let access_token = document.getElementById("AccessToken");
+        let id_token = document.getElementById("IdToken");
+        access_token.innerHTML = localStorage.getItem("AccessToken");
+        id_token.innerHTML = localStorage.getItem("IdToken");
+      };
     </script>
   </body>
 </html>

@@ -141,7 +141,7 @@
             console.log(response.data);
             localStorage.setItem("IdToken", response.data.id_token);
             localStorage.setItem("AccessToken", response.data.access_token);
-            window.location.replace("http://localhost:5501/profile.html");
+            window.location.replace("https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/profile.html");
             return JSON.stringify(response.data);
           })
           .catch((error) => {
@@ -172,8 +172,8 @@
       window.onload = () => {
         console.log("location change ", window.location.href);
         if (
-          window.location.href != "http://localhost:5500/index.html" &&
-          window.location.href != "http://localhost:5500/"
+          window.location.href != "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/index.html" &&
+          window.location.href != "https://d2cvlmmg8c0xrp.cloudfront.net/cognito-demo/"
         ) {
           const user = getCurrentUrl();
         }
