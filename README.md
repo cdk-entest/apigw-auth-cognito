@@ -425,13 +425,16 @@ apigw-auth-cognito
 
 Basically, need to note a few things
 
-- install dependencies for cdk
-- install dependencies for lambda javascript
-- choose an app to synth and deploy (apigw-cognito-auth-app or api-lambda-auth-app)
-- test_auth.py for testing and interacting with cognito userpool using SDK
-- index.html and profile.html are frontend, can be run from local or hosting in CloudFront (up to you to use these haha)
+- test_auth.py for testing using SDK
+- index.html and profile.html for testing using browser
+- it is possible to run html locally or CloudFront
 
 ## CDK Synth and Deploy Backend
+
+Before synth and deploy, please ensure to install depedencies. Below steps will do this.
+
+- install dependencies for cdk
+- install dependencies for lambda
 
 clone this project
 
