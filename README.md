@@ -17,7 +17,6 @@ There are different ways to control access to API Gateway. This note shows two m
 
 ![1](https://user-images.githubusercontent.com/20411077/221124798-65ff9e7e-68f2-4526-b9dc-c3351e1d77bf.png)
 
-
 According to the [docs](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html), both IdToken and AccessToken can be used to control access to API Gateway. In case of access token, it should be created from hosted ui [here](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html)
 
 create a cognito user pool
@@ -83,7 +82,6 @@ book.addMethod(
 ```
 
 ![2](https://user-images.githubusercontent.com/20411077/221124870-ae9a8645-1091-49bb-a445-afd67226a1a1.png)
-
 
 - Option 1. Use the IdToken
 
@@ -271,7 +269,7 @@ create a method with authorizer
 bookResource.addMethod("GET", apiLambdaIntegration, { authorizer });
 ```
 
-## The Lamba Authorizer
+## Part 2. The Lamba Authorizer
 
 This function has two tasks: 1) verify the cognito jwt token 2) generate iam policy.
 
