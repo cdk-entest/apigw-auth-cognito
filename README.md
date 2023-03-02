@@ -119,7 +119,7 @@ Have to setup Cognito hosted UI, cognito resource server, and API Gateway Auth S
     )
 ```
 
-# Lambda Authorizer
+# Part 2. Lambda Authorizer
 
 [GitHub](https://github.com/entest-hai/apigw-auth-cognito) this uses cognito and lambda to do api authentication and deply by using CDK. Basic concepts:
 
@@ -138,7 +138,7 @@ Have to setup Cognito hosted UI, cognito resource server, and API Gateway Auth S
 5. The lamba auth validate and return a temporary iam policy
 6. Given the iam policy user request can access things
 
-## Cognito User Pool Stack
+### Cognito User Pool Stack
 
 ```tsx
 export class CongitoUserPool extends Stack {
@@ -194,7 +194,7 @@ new ApiGwAuthStack(app, "ApiGwAuthStack", {
 });
 ```
 
-## ApiGw Auth Stack
+### ApiGw Auth Stack
 
 create an api gateway
 
@@ -269,7 +269,7 @@ create a method with authorizer
 bookResource.addMethod("GET", apiLambdaIntegration, { authorizer });
 ```
 
-## Part 2. The Lamba Authorizer
+### The Lamba Authorizer
 
 This function has two tasks: 1) verify the cognito jwt token 2) generate iam policy.
 
