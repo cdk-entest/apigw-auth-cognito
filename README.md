@@ -436,17 +436,33 @@ npm install package.json
 cdk synth
 
 ```bash
-cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-auth-app.ts' synth
+cdk synth
 ```
 
 deploy
 
 ```bash
-cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-auth-app.ts' deploy --all
+cdk deploy
 ```
 
-## Custom Hosted UI
+## Troubleshooting
 
+When running cdk synth the below command in cdk.json will be executed to synthesize the apigw-cognito-auth-app into cloudformation template.
+
+```json
+"app": "npx ts-node --prefer-ts-exts bin/apigw-cognito-auth-app.ts",
 ```
-https://entest-auth.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=5tkkfuob39tkpu24vkoeuacvpq&redirect_uri=http://localhost:5500/
+
+To synthesize the lambda authorizer app, thre are two options
+
+- option 1. modify the cdk.json
+
+```json
+"app": "npx ts-node --prefer-ts-exts bin/apigw-cognito-auth-app.ts",
+```
+
+- option 2. type below custom command right in the terminal to build the lambda authroizer app A
+
+```bash
+cdk --app 'npx ts-node --prefer-ts-exts bin/apigw-lambda-auth-app.ts' synth
 ```
