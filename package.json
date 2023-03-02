@@ -2,7 +2,7 @@
   "name": "apigw-auth-app",
   "version": "0.1.0",
   "bin": {
-    "apigw-auth-app": "bin/apigw-auth-app.ts"
+    "app": "bin/apigw-auth-app.ts"
   },
   "scripts": {
     "build": "tsc",

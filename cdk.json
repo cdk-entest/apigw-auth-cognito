@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/api-gateway-lambda-auth-cognito.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/apigw-cognito-auth-app.ts",
   "watch": {
     "include": [
       "**"
