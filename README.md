@@ -401,7 +401,37 @@ curl option
 curl -X GET https://$APIID.execute-api.$REGION.amazonaws.com/prod/book -H "Authorization: Bearer $TOKEN"
 ```
 
-## Deploy with CDK
+## Project Structure
+
+```
+apigw-auth-cognito
+--bin
+  |--apigw-cognito-auth-app.ts
+  |--apigw-lambda-auth-app.ts
+--lambda
+  |--lambda_hello.py
+  |--lambda_auth.js
+  |--lamda_backend.py
+  |--package.json
+--lib
+  |--apigw-auth-cognito.ts
+  |--apigw-cognito-authorizer.ts
+--test
+  |--index.html
+  |--profile.html
+  |--config.js
+  |--test_auth.py
+```
+
+Basically, need to note a few things
+
+- install dependencies for cdk
+- install dependencies for lambda javascript
+- choose an app to synth and deploy (apigw-cognito-auth-app or api-lambda-auth-app)
+- test_auth.py for testing and interacting with cognito userpool using SDK
+- index.html and profile.html are frontend, can be run from local or hosting in CloudFront (up to you to use these haha)
+
+## CDK Synth and Deploy Backend
 
 clone this project
 
@@ -433,21 +463,7 @@ and
 npm install package.json
 ```
 
-cdk synth
-
-```bash
-cdk synth
-```
-
-deploy
-
-```bash
-cdk deploy
-```
-
-## Troubleshooting
-
-When running cdk synth the below command in cdk.json will be executed to synthesize the apigw-cognito-auth-app into cloudformation template.
+Now synth and deploy. When running cdk synth the below command in cdk.json will be executed to synthesize the apigw-cognito-auth-app into cloudformation template.
 
 ```json
 "app": "npx ts-node --prefer-ts-exts bin/apigw-cognito-auth-app.ts",
